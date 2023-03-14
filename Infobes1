@@ -1,0 +1,44 @@
+cryptMode = input("Зашифровать(З)/Расшифровать(Р)").upper()
+if cryptMode not in ['З', 'Р']:
+    print("Неопознанная команда");
+    raise SystemExit
+
+alphaList = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ ")
+startMessage = input("Сообщение на Английском:").upper()
+
+try:
+    numberKey = int(input("int ключ: "))
+except ValueError:
+    print("Введить int ключ"); raise SystemExit
+
+stringKey = list(input("Ключевое слово: ").upper())
+
+
+def remove(alpha, string):
+    for symbol in string:
+        if symbol in alpha: alpha.remove(symbol)
+    for symbol in string:
+        if symbol not in [chr(x) for x in range(65, 91)] \
+                or string.count(symbol) > 1: string.remove(symbol)
+    return alpha, string
+
+
+def insert(alpha_string):
+    for index, symbol in enumerate(alpha_string[1]):
+        alpha_string[0].insert((numberKey + index) % 27, symbol)
+    return alpha_string[0]
+
+
+def encryptDecrypt(mode, message, key, final=""):
+    alpha = insert(remove(alphaList, stringKey))
+    print(alpha)
+    for symbol in message:
+        if mode == 'З':
+            final += alpha[(alpha.index(symbol) + key) % 27]
+        else:
+            final += alpha[(alpha.index(symbol) - key) % 27]
+    return final
+
+
+message = encryptDecrypt(cryptMode, startMessage, numberKey)
+print("Итоговое сообщение:", message)
