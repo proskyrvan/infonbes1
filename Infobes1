@@ -9,7 +9,7 @@ startMessage = input("Сообщение на Английском:").upper()
 try:
     numberKey = int(input("int ключ: "))
 except ValueError:
-    print("Введит int ключ"); raise SystemExit
+    print("Введите int ключ"); raise SystemExit
 
 stringKey = list(input("Ключевое слово: ").upper())
 
